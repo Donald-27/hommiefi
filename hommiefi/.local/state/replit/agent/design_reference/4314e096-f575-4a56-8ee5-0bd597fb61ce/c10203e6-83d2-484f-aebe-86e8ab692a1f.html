@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hommiefi - Community Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+    tailwind.config = {
+        theme: {
+            extend: {
+                colors: {
+                    'coral': '#FF6B6B',
+                    'teal': '#20B2AA',
+                    'neon-green': '#39FF14',
+                    'neon-pink': '#FF1493',
+                    'deep-slate': '#1E293B',
+                    'glass-white': 'rgba(255, 255, 255, 0.1)',
+                    'glass-border': 'rgba(255, 255, 255, 0.3)',
+                },
+                fontFamily: {
+                    'inter': ['Inter', 'sans-serif'],
+                    'poppins': ['Poppins', 'sans-serif'],
+                },
+                animation: {
+                    'morphing': 'morphing 3s ease-in-out infinite',
+                    'pulse-glow': 'pulse-glow 2s ease-in-out infinite alternate',
+                    'slide-up': 'slide-up 0.3s ease-out',
+                    'float': 'float 3s ease-in-out infinite',
+                },
+                backdropBlur: {
+                    'xs': '2px',
+                }
+            }
+        }
+    };
+    </script>
+    <style>
+        .glassmorphic {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        
+        .morphic-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .holographic {
+            background: linear-gradient(45deg, #FF6B6B, #20B2AA, #39FF14, #FF1493);
+            background-size: 400% 400%;
+            animation: morphing 3s ease-in-out infinite;
+        }
+        
+        @keyframes morphing {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        @keyframes pulse-glow {
+            0% { box-shadow: 0 0 20px rgba(255, 107, 107, 0.3); }
+            100% { box-shadow: 0 0 30px rgba(32, 178, 170, 0.5), 0 0 40px rgba(57, 255, 20, 0.3); }
+        }
+        
+        @keyframes slide-up {
+            0% { transform: translateY(20px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #FF6B6B, #20B2AA, #39FF14, #FF1493);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .activity-pulse::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255,107,107,0.1), rgba(32,178,170,0.1));
+            border-radius: inherit;
+            animation: pulse 2s infinite;
+        }
+        
+        .sidebar-collapsed {
+            width: 4rem;
+        }
+        
+        .sidebar-expanded {
+            width: 16rem;
+        }
+        
+        .mobile-menu-open {
+            transform: translateX(0);
+        }
+        
+        .mobile-menu-closed {
+            transform: translateX(-100%);
+        }
+        
+        .chat-message {
+            animation: slide-up 0.3s ease-out;
+        }
+        
+        .live-indicator {
+            position: relative;
+        }
+        
+        .live-indicator::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 8px;
+            height: 8px;
+            background: #39FF14;
+            border-radius: 50%;
+            animation: pulse 1s infinite;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-slate-900 via-deep-slate to-slate-800 min-h-screen text-white font-inter overflow-x-hidden">
+    <!-- @COMPONENT: AppShell -->
+    <div class="flex min-h-screen">
+        <!-- @COMPONENT: Sidebar -->
+        <aside id="sidebar" class="sidebar-expanded transition-all duration-300 bg-gradient-to-b from-slate-800/50 to-slate-900/50 backdrop-blur-xl border-r border-glass-border relative z-20 fixed md:relative h-full mobile-menu-closed md:mobile-menu-open">
+            <!-- Sidebar Header -->
+            <div class="p-6 border-b border-glass-border">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 holographic rounded-xl flex items-center justify-center">
+                        <i class="fas fa-home text-white text-lg"></i>
+                    </div>
+                    <div class="sidebar-text">
+                        <h1 class="font-poppins font-black text-xl gradient-text">Hommiefi</h1>
+                        <p class="text-xs text-gray-400">Community Hub</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Navigation -->
+            <nav class="p-4 space-y-2 flex-1">
+                <div class="mb-6">
+                    <h3 class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3 sidebar-text">Main Features</h3>
+                    <div class="space-y-1">
+                        <!-- @COMPONENT: NavItem [Loop] -->
+                        <a href="#" class="nav-item group flex items-center px-3 py-3 rounded-xl text-white hover:bg-coral/10 transition-all duration-300 relative">
+                            <i class="fas fa-repeat text-coral text-lg min-w-[24px]"></i>
+                            <span class="ml-4 font-medium sidebar-text">Loop</span>
+                            <div class="live-indicator ml-auto sidebar-text">
+                                <span class="text-xs bg-coral/20 text-coral px-2 py-1 rounded-full">Live</span>
+                            </div>
+                        </a>
+                        
+                        <!-- @COMPONENT: NavItem [Haven] -->
+                        <a href="#" class="nav-item group flex items-center px-3 py-3 rounded-xl text-gray-300 hover:bg-teal/10 transition-all duration-300">
+                            <i class="fas fa-shield-alt text-teal text-lg min-w-[24px]"></i>
+                            <span class="ml-4 font-medium sidebar-text">Haven</span>
+                        </a>
+                        
+                        <!-- @COMPONENT: NavItem [Gigs] -->
+                        <a href="#" class="nav-item group flex items-center px-3 py-3 rounded-xl text-gray-300 hover:bg-neon-green/10 transition-all duration-300">
+                            <i class="fas fa-briefcase text-neon-green text-lg min-w-[24px]"></i>
+                            <span class="ml-4 font-medium sidebar-text">Gigs</span>
+                        </a>
+                        
+                        <!-- @COMPONENT: NavItem [Vibe] -->
+                        <a href="#" class="nav-item group flex items-center px-3 py-3 rounded-xl text-gray-300 hover:bg-neon-pink/10 transition-all duration-300">
+                            <i class="fas fa-music text-neon-pink text-lg min-w-[24px]"></i>
+                            <span class="ml-4 font-medium sidebar-text">Vibe</span>
+                        </a>
+                        
+                        <!-- @COMPONENT: NavItem [Chat] -->
+                        <a href="#" class="nav-item group flex items-center px-3 py-3 rounded-xl text-gray-300 hover:bg-purple-500/10 transition-all duration-300">
+                            <i class="fas fa-comments text-purple-400 text-lg min-w-[24px]"></i>
+                            <span class="ml-4 font-medium sidebar-text">Chat</span>
+                            <div class="ml-auto sidebar-text">
+                                <span class="w-5 h-5 bg-coral rounded-full text-xs flex items-center justify-center font-bold">3</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Community Channels -->
+                <div>
+                    <h3 class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3 sidebar-text">Channels</h3>
+                    <div class="space-y-1">
+                        <a href="#" class="flex items-center px-3 py-2 rounded-lg text-gray-300 hover:bg-glass-white transition-all duration-300">
+                            <i class="fas fa-hashtag text-gray-400 text-sm min-w-[16px]"></i>
+                            <span class="ml-3 text-sm sidebar-text">general</span>
+                        </a>
+                        <a href="#" class="flex items-center px-3 py-2 rounded-lg text-gray-300 hover:bg-glass-white transition-all duration-300">
+                            <i class="fas fa-hashtag text-gray-400 text-sm min-w-[16px]"></i>
+                            <span class="ml-3 text-sm sidebar-text">help</span>
+                        </a>
+                        <a href="#" class="flex items-center px-3 py-2 rounded-lg text-gray-300 hover:bg-glass-white transition-all duration-300">
+                            <i class="fas fa-hashtag text-gray-400 text-sm min-w-[16px]"></i>
+                            <span class="ml-3 text-sm sidebar-text">random</span>
+                        </a>
+                    </div>
+                </div>
+            </nav>
+            
+            <!-- User Profile -->
+            <div class="p-4 border-t border-glass-border">
+                <div class="flex items-center space-x-3">
+                    <!-- User avatar from Unsplash - a professional headshot of a young person smiling -->
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&crop=face" alt="User Avatar" class="w-10 h-10 rounded-full border-2 border-glass-border">
+                    <div class="flex-1 sidebar-text" data-bind="user.profile">
+                        <h4 class="font-semibold text-sm" data-bind="user.username">Alex Chen</h4>
+                        <p class="text-xs text-gray-400" data-bind="user.status">Super Neighbor</p>
+                    </div>
+                    <button class="p-2 hover:bg-glass-white rounded-lg transition-colors sidebar-text">
+                        <i class="fas fa-cog text-gray-400"></i>
+                    </button>
+                </div>
+            </div>
+        </aside>
+        <!-- @END_COMPONENT: Sidebar -->
+        
+        <!-- Main Content -->
+        <main class="flex-1 flex flex-col overflow-hidden">
+            <!-- @COMPONENT: TopBar -->
+            <header class="bg-slate-800/50 backdrop-blur-xl border-b border-glass-border p-4 flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <button id="sidebarToggle" class="md:hidden p-2 hover:bg-glass-white rounded-lg transition-colors">
+                        <i class="fas fa-bars text-gray-300"></i>
+                    </button>
+                    <div>
+                        <h1 class="font-poppins font-bold text-xl">Community Loop</h1>
+                        <p class="text-sm text-gray-400">Real-time activity and community stats</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <input type="text" placeholder="Search community..." class="bg-glass-white border border-glass-border rounded-xl px-4 py-2 pr-10 text-sm focus:outline-none focus:ring-2 focus:ring-coral/50 transition-all" data-mock="true">
+                        <i class="fas fa-search absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                    </div>
+                    
+                    <button class="relative p-2 hover:bg-glass-white rounded-xl transition-colors">
+                        <i class="fas fa-bell text-gray-300 text-lg"></i>
+                        <span class="absolute -top-1 -right-1 w-5 h-5 bg-coral rounded-full text-xs flex items-center justify-center font-bold">2</span>
+                    </button>
+                </div>
+            </header>
+            <!-- @END_COMPONENT: TopBar -->
+            
+            <!-- Dashboard Content -->
+            <div class="flex-1 overflow-y-auto p-6 space-y-8">
+                <!-- @COMPONENT: CommunityStats -->
+                <section class="space-y-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h2 class="font-poppins font-black text-3xl gradient-text mb-2">
+                                Your Community Impact
+                            </h2>
+                            <div class="flex items-center space-x-3">
+                                <span class="text-gray-400 font-medium" data-bind="user.greeting">Welcome back, Alex!</span>
+                                <span class="font-bold text-neon-green" data-bind="user.trustLevel">• Super Neighbor</span>
+                            </div>
+                        </div>
+                        
+                        <div class="glassmorphic p-4 rounded-2xl border border-glass-border">
+                            <div class="w-12 h-12 holographic rounded-2xl flex items-center justify-center animate-float">
+                                <i class="fas fa-crown text-white text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Stats Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <!-- Times Helped -->
+                        <div class="morphic-card p-6 rounded-3xl text-center group hover:scale-105 transition-all duration-300 cursor-pointer relative overflow-hidden">
+                            <div class="absolute inset-0 rounded-3xl bg-gradient-to-br from-coral to-orange-500 opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
+                            
+                            <div class="relative z-10">
+                                <div class="relative mb-4">
+                                    <div class="w-16 h-16 bg-gradient-to-br from-coral to-orange-500 rounded-3xl flex items-center justify-center mx-auto animate-pulse-glow shadow-xl">
+                                        <i class="fas fa-heart text-white text-2xl"></i>
+                                    </div>
+                                    <div class="absolute -top-2 -right-2 glassmorphic w-8 h-8 rounded-full flex items-center justify-center border border-glass-border">
+                                        <span class="text-xs font-black text-white" data-bind="user.helpCount">23</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="space-y-1">
+                                    <p class="text-lg font-black text-white group-hover:gradient-text transition-all duration-300">
+                                        Times Helped
+                                    </p>
+                                    <p class="text-sm text-gray-400 font-medium">This month</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- HOM Coins -->
+                        <div class="morphic-card p-6 rounded-3xl text-center group hover:scale-105 transition-all duration-300 cursor-pointer relative overflow-hidden">
+                            <div class="absolute inset-0 rounded-3xl bg-gradient-to-br from-teal to-blue-500 opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
+                            
+                            <div class="relative z-10">
+                                <div class="relative mb-4">
+                                    <div class="w-16 h-16 bg-gradient-to-br from-teal to-blue-500 rounded-3xl flex items-center justify-center mx-auto animate-pulse-glow shadow-xl">
+                                        <i class="fas fa-star text-white text-2xl"></i>
+                                    </div>
+                                    <div class="absolute -top-2 -right-2 glassmorphic w-8 h-8 rounded-full flex items-center justify-center border border-glass-border">
+                                        <span class="text-xs font-black text-white" data-bind="user.homCoins">156</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="space-y-1">
+                                    <p class="text-lg font-black text-white group-hover:gradient-text transition-all duration-300">
+                                        HOM Coins
+                                    </p>
+                                    <p class="text-sm text-gray-400 font-medium">Earned</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Trust Score -->
+                        <div class="morphic-card p-6 rounded-3xl text-center group hover:scale-105 transition-all duration-300 cursor-pointer relative overflow-hidden">
+                            <div class="absolute inset-0 rounded-3xl bg-gradient-to-br from-purple-500 to-pink-500 opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
+                            
+                            <div class="relative z-10">
+                                <div class="relative mb-4">
+                                    <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-3xl flex items-center justify-center mx-auto animate-pulse-glow shadow-xl">
+                                        <i class="fas fa-crown text-white text-2xl"></i>
+                                    </div>
+                                    <div class="absolute -top-2 -right-2 glassmorphic w-8 h-8 rounded-full flex items-center justify-center border border-glass-border">
+                                        <span class="text-xs font-black text-white" data-bind="user.trustScore">94</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="space-y-1">
+                                    <p class="text-lg font-black text-white group-hover:gradient-text transition-all duration-300">
+                                        Trust Score
+                                    </p>
+                                    <p class="text-sm text-gray-400 font-medium" data-bind="user.trustLevel">Super Neighbor!</p>
+                                </div>
+                                
+                                <div class="mt-3">
+                                    <div class="w-full bg-gray-700 rounded-full h-2">
+                                        <div class="bg-gradient-to-r from-purple-500 to-pink-500 h-2 rounded-full transition-all duration-500" style="width: 94%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Achievement Badges -->
+                    <div class="glassmorphic p-6 rounded-3xl border border-glass-border">
+                        <h3 class="font-poppins font-bold text-xl text-white mb-4">Recent Achievements</h3>
+                        <div class="flex flex-wrap gap-3">
+                            <div class="glassmorphic px-4 py-2 rounded-2xl border border-glass-border flex items-center space-x-2">
+                                <i class="fas fa-heart text-coral"></i>
+                                <span class="text-sm font-bold text-white">Helper Hero</span>
+                            </div>
+                            <div class="glassmorphic px-4 py-2 rounded-2xl border border-glass-border flex items-center space-x-2">
+                                <i class="fas fa-crown text-neon-green"></i>
+                                <span class="text-sm font-bold text-white">Super Neighbor</span>
+                            </div>
+                            <div class="glassmorphic px-4 py-2 rounded-2xl border border-glass-border flex items-center space-x-2">
+                                <i class="fas fa-star text-teal"></i>
+                                <span class="text-sm font-bold text-white">Coin Collector</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- @END_COMPONENT: CommunityStats -->
+                
+                <!-- Live Activity Feed -->
+                <section class="space-y-6">
+                    <div class="flex items-center justify-between">
+                        <h2 class="font-poppins font-bold text-2xl gradient-text">Live Community Activity</h2>
+                        <div class="flex items-center space-x-2">
+                            <div class="w-3 h-3 bg-neon-green rounded-full animate-pulse"></div>
+                            <span class="text-sm text-gray-400">Live</span>
+                        </div>
+                    </div>
+                    
+                    <!-- @MAP: activities.map(activity => ( -->
+                    <div class="space-y-4">
+                        <!-- Activity Item 1 -->
+                        <div class="activity-pulse morphic-card p-4 rounded-2xl border border-glass-border relative">
+                            <div class="flex items-start space-x-4">
+                                <!-- User avatar - a cheerful woman with curly hair -->
+                                <img src="https://images.unsplash.com/photo-1494790108755-2616b54d8fcd?w=40&h=40&fit=crop&crop=face" alt="Sarah Wilson" class="w-10 h-10 rounded-full border-2 border-coral" data-mock-image="true" data-implementation="Use user.avatar">
+                                <div class="flex-1">
+                                    <div class="flex items-center space-x-2 mb-2">
+                                        <h4 class="font-semibold text-white" data-bind="activity.user.name">Sarah Wilson</h4>
+                                        <span class="text-xs text-coral font-bold" data-bind="activity.action">helped a neighbor</span>
+                                        <span class="text-xs text-gray-400" data-bind="activity.timestamp">2 min ago</span>
+                                    </div>
+                                    <p class="text-gray-300 text-sm" data-bind="activity.description">Just helped Mrs. Johnson carry groceries upstairs! 🛒✨</p>
+                                    <div class="flex items-center space-x-4 mt-3">
+                                        <button class="flex items-center space-x-1 text-gray-400 hover:text-coral transition-colors">
+                                            <i class="fas fa-heart text-xs"></i>
+                                            <span class="text-xs" data-bind="activity.likes">12</span>
+                                        </button>
+                                        <button class="flex items-center space-x-1 text-gray-400 hover:text-teal transition-colors">
+                                            <i class="fas fa-comment text-xs"></i>
+                                            <span class="text-xs" data-bind="activity.comments">3</span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="text-xs glassmorphic px-2 py-1 rounded-full border border-glass-border">
+                                    <span class="text-coral">+5 HOM</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Activity Item 2 -->
+                        <div class="activity-pulse morphic-card p-4 rounded-2xl border border-glass-border relative">
+                            <div class="flex items-start space-x-4">
+                                <!-- User avatar - a young man with a friendly smile -->
+                                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face" alt="Mike Torres" class="w-10 h-10 rounded-full border-2 border-teal" data-mock-image="true" data-implementation="Use user.avatar">
+                                <div class="flex-1">
+                                    <div class="flex items-center space-x-2 mb-2">
+                                        <h4 class="font-semibold text-white" data-bind="activity.user.name">Mike Torres</h4>
+                                        <span class="text-xs text-teal font-bold" data-bind="activity.action">posted in Haven</span>
+                                        <span class="text-xs text-gray-400" data-bind="activity.timestamp">5 min ago</span>
+                                    </div>
+                                    <p class="text-gray-300 text-sm" data-bind="activity.description">Free piano lessons for kids this weekend! DM me if interested 🎹🎵</p>
+                                    <div class="flex items-center space-x-4 mt-3">
+                                        <button class="flex items-center space-x-1 text-gray-400 hover:text-coral transition-colors">
+                                            <i class="fas fa-heart text-xs"></i>
+                                            <span class="text-xs" data-bind="activity.likes">8</span>
+                                        </button>
+                                        <button class="flex items-center space-x-1 text-gray-400 hover:text-teal transition-colors">
+                                            <i class="fas fa-comment text-xs"></i>
+                                            <span class="text-xs" data-bind="activity.comments">5</span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="text-xs glassmorphic px-2 py-1 rounded-full border border-glass-border">
+                                    <span class="text-teal">Haven</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Activity Item 3 -->
+                        <div class="activity-pulse morphic-card p-4 rounded-2xl border border-glass-border relative">
+                            <div class="flex items-start space-x-4">
+                                <!-- User avatar - a woman with professional attire -->
+                                <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=40&h=40&fit=crop&crop=face" alt="Emma Davis" class="w-10 h-10 rounded-full border-2 border-neon-pink" data-mock-image="true" data-implementation="Use user.avatar">
+                                <div class="flex-1">
+                                    <div class="flex items-center space-x-2 mb-2">
+                                        <h4 class="font-semibold text-white" data-bind="activity.user.name">Emma Davis</h4>
+                                        <span class="text-xs text-neon-pink font-bold" data-bind="activity.action">completed a gig</span>
+                                        <span class="text-xs text-gray-400" data-bind="activity.timestamp">8 min ago</span>
+                                    </div>
+                                    <p class="text-gray-300 text-sm" data-bind="activity.description">Successfully delivered homemade cookies to 5 neighbors! Thank you everyone! 🍪😊</p>
+                                    <div class="flex items-center space-x-4 mt-3">
+                                        <button class="flex items-center space-x-1 text-gray-400 hover:text-coral transition-colors">
+                                            <i class="fas fa-heart text-xs"></i>
+                                            <span class="text-xs" data-bind="activity.likes">15</span>
+                                        </button>
+                                        <button class="flex items-center space-x-1 text-gray-400 hover:text-teal transition-colors">
+                                            <i class="fas fa-comment text-xs"></i>
+                                            <span class="text-xs" data-bind="activity.comments">7</span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="text-xs glassmorphic px-2 py-1 rounded-full border border-glass-border">
+                                    <span class="text-neon-green">+15 HOM</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- @END_MAP )) -->
+                </section>
+                
+                <!-- Quick Actions -->
+                <section class="space-y-6">
+                    <h2 class="font-poppins font-bold text-2xl gradient-text">Quick Actions</h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <!-- Post Help Request -->
+                        <button class="morphic-card p-6 rounded-2xl border border-glass-border text-center hover:scale-105 transition-all duration-300 group" data-event="click:openHelpRequest">
+                            <div class="w-12 h-12 bg-gradient-to-br from-coral to-red-500 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:animate-pulse-glow">
+                                <i class="fas fa-hands-helping text-white text-xl"></i>
+                            </div>
+                            <h3 class="font-bold text-white mb-2">Request Help</h3>
+                            <p class="text-xs text-gray-400">Ask your community for assistance</p>
+                        </button>
+                        
+                        <!-- Offer Service -->
+                        <button class="morphic-card p-6 rounded-2xl border border-glass-border text-center hover:scale-105 transition-all duration-300 group" data-event="click:offerService">
+                            <div class="w-12 h-12 bg-gradient-to-br from-teal to-green-500 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:animate-pulse-glow">
+                                <i class="fas fa-gift text-white text-xl"></i>
+                            </div>
+                            <h3 class="font-bold text-white mb-2">Offer Service</h3>
+                            <p class="text-xs text-gray-400">Share your skills with neighbors</p>
+                        </button>
+                        
+                        <!-- Join Chat -->
+                        <button class="morphic-card p-6 rounded-2xl border border-glass-border text-center hover:scale-105 transition-all duration-300 group" data-event="click:joinChat">
+                            <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:animate-pulse-glow">
+                                <i class="fas fa-comments text-white text-xl"></i>
+                            </div>
+                            <h3 class="font-bold text-white mb-2">Join Chat</h3>
+                            <p class="text-xs text-gray-400">Connect with your community</p>
+                        </button>
+                        
+                        <!-- Share Vibe -->
+                        <button class="morphic-card p-6 rounded-2xl border border-glass-border text-center hover:scale-105 transition-all duration-300 group" data-event="click:shareVibe">
+                            <div class="w-12 h-12 bg-gradient-to-br from-neon-pink to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:animate-pulse-glow">
+                                <i class="fas fa-music text-white text-xl"></i>
+                            </div>
+                            <h3 class="font-bold text-white mb-2">Share Vibe</h3>
+                            <p class="text-xs text-gray-400">Express your current mood</p>
+                        </button>
+                    </div>
+                </section>
+            </div>
+        </main>
+        
+        <!-- @COMPONENT: ChatPanel (Collapsible) -->
+        <aside id="chatPanel" class="w-80 bg-slate-800/50 backdrop-blur-xl border-l border-glass-border hidden xl:flex flex-col">
+            <!-- Chat Header -->
+            <div class="p-4 border-b border-glass-border">
+                <div class="flex items-center justify-between">
+                    <h3 class="font-poppins font-bold text-lg text-white">Community Chat</h3>
+                    <div class="flex items-center space-x-2">
+                        <div class="w-2 h-2 bg-neon-green rounded-full animate-pulse"></div>
+                        <span class="text-xs text-gray-400">12 online</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Chat Messages -->
+            <div class="flex-1 overflow-y-auto p-4 space-y-4">
+                <!-- @MAP: messages.map(message => ( -->
+                <!-- Chat Message 1 -->
+                <div class="chat-message flex items-start space-x-3" data-bind="message.item">
+                    <!-- User avatar - a person with glasses smiling -->
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=32&h=32&fit=crop&crop=face" alt="John Doe" class="w-8 h-8 rounded-full" data-mock-image="true">
+                    <div class="flex-1">
+                        <div class="flex items-center space-x-2 mb-1">
+                            <span class="text-sm font-medium text-white" data-bind="message.user.name">John</span>
+                            <span class="text-xs text-gray-400" data-bind="message.timestamp">now</span>
+                        </div>
+                        <p class="text-sm text-gray-300" data-bind="message.content">Thanks for the help with my garden! 🌱</p>
+                    </div>
+                </div>
+                
+                <!-- Chat Message 2 -->
+                <div class="chat-message flex items-start space-x-3" data-bind="message.item">
+                    <!-- User avatar - a woman with a warm smile -->
+                    <img src="https://images.unsplash.com/photo-1494790108755-2616b54d8fcd?w=32&h=32&fit=crop&crop=face" alt="Sarah Wilson" class="w-8 h-8 rounded-full" data-mock-image="true">
+                    <div class="flex-1">
+                        <div class="flex items-center space-x-2 mb-1">
+                            <span class="text-sm font-medium text-white" data-bind="message.user.name">Sarah</span>
+                            <span class="text-xs text-gray-400" data-bind="message.timestamp">2m</span>
+                        </div>
+                        <p class="text-sm text-gray-300" data-bind="message.content">Anyone need help with grocery shopping this weekend?</p>
+                    </div>
+                </div>
+                
+                <!-- Chat Message 3 -->
+                <div class="chat-message flex items-start space-x-3" data-bind="message.item">
+                    <!-- User avatar - a man with a casual look -->
+                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop&crop=face" alt="Mike Torres" class="w-8 h-8 rounded-full" data-mock-image="true">
+                    <div class="flex-1">
+                        <div class="flex items-center space-x-2 mb-1">
+                            <span class="text-sm font-medium text-white" data-bind="message.user.name">Mike</span>
+                            <span class="text-xs text-gray-400" data-bind="message.timestamp">5m</span>
+                        </div>
+                        <p class="text-sm text-gray-300" data-bind="message.content">I'd love help! My car is in the shop 🚗</p>
+                    </div>
+                </div>
+                <!-- @END_MAP )) -->
+            </div>
+            
+            <!-- Chat Input -->
+            <div class="p-4 border-t border-glass-border">
+                <div class="flex items-center space-x-2">
+                    <input type="text" placeholder="Type a message..." class="flex-1 bg-glass-white border border-glass-border rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-coral/50 transition-all" data-mock="true" data-implementation="Should connect to real-time chat system">
+                    <button class="p-2 bg-coral hover:bg-coral/80 rounded-xl transition-colors" data-event="click:sendMessage">
+                        <i class="fas fa-paper-plane text-white"></i>
+                    </button>
+                </div>
+            </div>
+        </aside>
+        <!-- @END_COMPONENT: ChatPanel -->
+    </div>
+    <!-- @END_COMPONENT: AppShell -->
+    
+    <!-- Mobile Menu Overlay -->
+    <div id="mobileOverlay" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-10 hidden md:hidden opacity-0 transition-opacity duration-300"></div>
+    
+    <script>
+        // TODO: Replace with proper React state management and real-time data
+        (function() {
+            // Sidebar Toggle Functionality
+            const sidebarToggle = document.getElementById('sidebarToggle');
+            const sidebar = document.getElementById('sidebar');
+            const mobileOverlay = document.getElementById('mobileOverlay');
+            
+            if (sidebarToggle && sidebar) {
+                sidebarToggle.addEventListener('click', function() {
+                    const isOpen = sidebar.classList.contains('mobile-menu-open');
+                    
+                    if (isOpen) {
+                        sidebar.classList.remove('mobile-menu-open');
+                        sidebar.classList.add('mobile-menu-closed');
+                        mobileOverlay.classList.add('hidden');
+                        setTimeout(() => mobileOverlay.style.opacity = '0', 10);
+                    } else {
+                        sidebar.classList.remove('mobile-menu-closed');
+                        sidebar.classList.add('mobile-menu-open');
+                        mobileOverlay.classList.remove('hidden');
+                        setTimeout(() => mobileOverlay.style.opacity = '1', 10);
+                    }
+                });
+            }
+            
+            // Close mobile menu on overlay click
+            if (mobileOverlay) {
+                mobileOverlay.addEventListener('click', function() {
+                    sidebar.classList.remove('mobile-menu-open');
+                    sidebar.classList.add('mobile-menu-closed');
+                    mobileOverlay.classList.add('hidden');
+                    mobileOverlay.style.opacity = '0';
+                });
+            }
+            
+            // Responsive sidebar text handling
+            function handleSidebarText() {
+                const sidebarTexts = document.querySelectorAll('.sidebar-text');
+                const isCollapsed = window.innerWidth >= 768 && sidebar.classList.contains('sidebar-collapsed');
+                
+                sidebarTexts.forEach(text => {
+                    if (isCollapsed) {
+                        text.style.display = 'none';
+                    } else {
+                        text.style.display = '';
+                    }
+                });
+            }
+            
+            // TODO: Implement real-time chat functionality
+            // TODO: Connect to WebSocket for live activity updates
+            // TODO: Implement proper API calls for user data
+            // TODO: Add error handling and loading states
+            // TODO: Implement proper routing for different sections
+            
+            // Simulate real-time activity updates (replace with actual WebSocket)
+            function simulateActivityUpdates() {
+                const activityItems = document.querySelectorAll('.activity-pulse');
+                
+                setInterval(() => {
+                    activityItems.forEach((item, index) => {
+                        setTimeout(() => {
+                            item.style.animation = 'none';
+                            setTimeout(() => {
+                                item.style.animation = '';
+                            }, 10);
+                        }, index * 200);
+                    });
+                }, 10000);
+            }
+            
+            // Initialize
+            handleSidebarText();
+            simulateActivityUpdates();
+            
+            // Handle window resize
+            window.addEventListener('resize', handleSidebarText);
+        })();
+    </script>
+</body>
+</html>

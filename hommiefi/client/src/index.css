@@ -1,0 +1,158 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: hsl(39, 11%, 97%);
+  --foreground: hsl(222.2, 84%, 4.9%);
+  --card: hsl(0, 0%, 100%);
+  --card-foreground: hsl(222.2, 84%, 4.9%);
+  --popover: hsl(0, 0%, 100%);
+  --popover-foreground: hsl(222.2, 84%, 4.9%);
+  --primary: hsl(6, 100%, 67%);
+  --primary-foreground: hsl(210, 40%, 98%);
+  --secondary: hsl(174, 44%, 51%);
+  --secondary-foreground: hsl(222.2, 84%, 4.9%);
+  --muted: hsl(210, 40%, 96%);
+  --muted-foreground: hsl(215.4, 16.3%, 46.9%);
+  --accent: hsl(210, 40%, 96%);
+  --accent-foreground: hsl(222.2, 84%, 4.9%);
+  --destructive: hsl(0, 84%, 60%);
+  --destructive-foreground: hsl(210, 40%, 98%);
+  --border: hsl(214.3, 31.8%, 91.4%);
+  --input: hsl(214.3, 31.8%, 91.4%);
+  --ring: hsl(6, 100%, 67%);
+  --radius: 0.5rem;
+  
+  /* Custom Hommiefi colors */
+  --coral: hsl(6, 100%, 67%);
+  --teal: hsl(174, 44%, 51%);
+  --ivory: hsl(39, 11%, 97%);
+  --warm-gray: hsl(213, 11%, 45%);
+}
+
+.dark {
+  --background: hsl(222.2, 84%, 4.9%);
+  --foreground: hsl(210, 40%, 98%);
+  --card: hsl(222.2, 84%, 4.9%);
+  --card-foreground: hsl(210, 40%, 98%);
+  --popover: hsl(222.2, 84%, 4.9%);
+  --popover-foreground: hsl(210, 40%, 98%);
+  --primary: hsl(6, 100%, 67%);
+  --primary-foreground: hsl(222.2, 84%, 4.9%);
+  --secondary: hsl(174, 44%, 51%);
+  --secondary-foreground: hsl(210, 40%, 98%);
+  --muted: hsl(217.2, 32.6%, 17.5%);
+  --muted-foreground: hsl(215, 20.2%, 65.1%);
+  --accent: hsl(217.2, 32.6%, 17.5%);
+  --accent-foreground: hsl(210, 40%, 98%);
+  --destructive: hsl(0, 62.8%, 30.6%);
+  --destructive-foreground: hsl(210, 40%, 98%);
+  --border: hsl(217.2, 32.6%, 17.5%);
+  --input: hsl(217.2, 32.6%, 17.5%);
+  --ring: hsl(6, 100%, 67%);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Poppins', sans-serif;
+  }
+}
+
+@layer components {
+  .morphic-card {
+    @apply bg-white/95 backdrop-blur-sm border border-white/20 shadow-lg;
+  }
+  
+  .glassmorphism {
+    @apply bg-white/10 backdrop-blur-md border border-white/20;
+  }
+  
+  .floating-nav {
+    @apply bg-white/90 backdrop-blur-xl border border-white/20;
+  }
+  
+  .community-card {
+    @apply bg-white/95 backdrop-blur-sm border border-white/30;
+  }
+  
+  .gradient-coral-teal {
+    background: linear-gradient(135deg, hsl(6, 100%, 67%) 0%, hsl(174, 44%, 51%) 100%);
+  }
+  
+  .gradient-coral {
+    background: linear-gradient(135deg, hsl(6, 100%, 67%) 0%, hsl(6, 100%, 62%) 100%);
+  }
+  
+  .gradient-teal {
+    background: linear-gradient(135deg, hsl(174, 44%, 51%) 0%, hsl(174, 44%, 46%) 100%);
+  }
+}
+
+@layer utilities {
+  .text-coral {
+    color: hsl(6, 100%, 67%);
+  }
+  
+  .bg-coral {
+    background-color: hsl(6, 100%, 67%);
+  }
+  
+  .text-teal {
+    color: hsl(174, 44%, 51%);
+  }
+  
+  .bg-teal {
+    background-color: hsl(174, 44%, 51%);
+  }
+  
+  .text-ivory {
+    color: hsl(39, 11%, 97%);
+  }
+  
+  .bg-ivory {
+    background-color: hsl(39, 11%, 97%);
+  }
+  
+  .border-coral {
+    border-color: hsl(6, 100%, 67%);
+  }
+  
+  .border-teal {
+    border-color: hsl(174, 44%, 51%);
+  }
+}
+
+/* Animation classes */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slide-up {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.5s ease-in-out;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.3s ease-out;
+}

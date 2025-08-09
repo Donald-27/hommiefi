@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hommiefi - Real Help. Right Next Door.</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'coral': '#FF6B5A',
+                        'teal': '#4BB8A9',
+                        'ivory': '#F9F9F9',
+                        'glass-white': 'rgba(255, 255, 255, 0.25)',
+                        'glass-border': 'rgba(255, 255, 255, 0.18)'
+                    },
+                    fontFamily: {
+                        'poppins': ['Poppins', 'sans-serif']
+                    },
+                    backdropBlur: {
+                        xs: '2px',
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                        'slide-up': 'slideUp 0.3s ease-out',
+                        'pulse-coral': 'pulse-coral 2s infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        },
+                        'pulse-coral': {
+                            '0%, 100%': { boxShadow: '0 0 0 0 rgba(255, 107, 90, 0.7)' },
+                            '70%': { boxShadow: '0 0 0 10px rgba(255, 107, 90, 0)' },
+                        },
+                    }
+                }
+            }
+        };
+    </script>
+    <style>
+        .glass {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+        .glass-dark {
+            background: rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .gradient-coral-teal {
+            background: linear-gradient(135deg, #FF6B5A 0%, #4BB8A9 100%);
+        }
+        .hover-lift:hover {
+            transform: translateY(-2px);
+            transition: transform 0.2s ease;
+        }
+    </style>
+</head>
+<body class="font-poppins bg-ivory min-h-screen">
+    
+    <!-- @COMPONENT: AppShell -->
+    <div class="flex h-screen bg-gradient-to-br from-coral/5 via-ivory to-teal/5">
+        
+        <!-- @COMPONENT: DesktopSidebar [left sidebar for desktop] -->
+        <aside class="hidden lg:flex w-80 flex-col">
+            <!-- Sidebar Header -->
+            <div class="p-6 border-r border-glass-border">
+                <div class="flex items-center space-x-3">
+                    <div class="w-12 h-12 gradient-coral-teal rounded-2xl flex items-center justify-center shadow-lg">
+                        <i class="fas fa-home text-white text-xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-gray-800">Hommiefi</h1>
+                        <p class="text-sm text-gray-500">Brookside, Toronto</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Navigation Menu -->
+            <nav class="flex-1 p-4 border-r border-glass-border">
+                <div class="space-y-2">
+                    <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-xl bg-coral/10 text-coral font-medium">
+                        <i class="fas fa-recycle w-5"></i>
+                        <span>Loop</span>
+                        <span class="ml-auto bg-coral text-white text-xs px-2 py-1 rounded-full">5</span>
+                    </a>
+                    <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-100 transition-colors">
+                        <i class="fas fa-briefcase w-5"></i>
+                        <span>Gigs</span>
+                    </a>
+                    <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-100 transition-colors">
+                        <i class="fas fa-users w-5"></i>
+                        <span>Vibe</span>
+                    </a>
+                    <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-100 transition-colors">
+                        <i class="fas fa-heart w-5"></i>
+                        <span>Haven</span>
+                    </a>
+                    <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-100 transition-colors">
+                        <i class="fas fa-comments w-5"></i>
+                        <span>Thread</span>
+                    </a>
+                    <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-100 transition-colors">
+                        <i class="fas fa-map-marker-alt w-5"></i>
+                        <span>Nearby</span>
+                    </a>
+                </div>
+                
+                <!-- Emergency HelpOut Button -->
+                <div class="mt-8">
+                    <button class="w-full bg-red-500 hover:bg-red-600 text-white px-4 py-3 rounded-xl font-semibold flex items-center justify-center space-x-2 animate-pulse-coral">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <span>HelpOut Button</span>
+                    </button>
+                </div>
+            </nav>
+            
+            <!-- User Profile -->
+            <div class="p-4 border-r border-t border-glass-border">
+                <div class="flex items-center space-x-3">
+                    <!-- A friendly woman with dark hair smiling warmly in natural lighting -->
+                    <img src="https://pixabay.com/get/g3d378f2de1d7ffc90cba3ecf7e979e56bee6576b788142e75ea008356ba80c7d04ec948e076ccc4cdfeeff94c3041fa2118da9a3e83d0c9f60c71bc436a9640e_1280.jpg" alt="Sarah Profile" class="w-10 h-10 rounded-full object-cover border-2 border-white shadow-sm">
+                    <div class="flex-1">
+                        <p class="font-medium text-gray-800">Sarah Chen</p>
+                        <p class="text-sm text-gray-500">Trusted Helper</p>
+                    </div>
+                    <div class="flex text-yellow-400">
+                        <i class="fas fa-star text-sm"></i>
+                        <span class="text-sm text-gray-600 ml-1">4.9</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+        <!-- @END_COMPONENT: DesktopSidebar -->
+        
+        <!-- @COMPONENT: MainContent -->
+        <main class="flex-1 flex flex-col overflow-hidden">
+            
+            <!-- @COMPONENT: TopHeader [mobile header and desktop top bar] -->
+            <header class="bg-white/80 backdrop-blur-md border-b border-glass-border px-4 lg:px-6 py-4">
+                <div class="flex items-center justify-between">
+                    <!-- Mobile Logo -->
+                    <div class="flex items-center space-x-3 lg:hidden">
+                        <div class="w-10 h-10 gradient-coral-teal rounded-xl flex items-center justify-center">
+                            <i class="fas fa-home text-white"></i>
+                        </div>
+                        <div>
+                            <h1 class="font-bold text-gray-800">Hommiefi</h1>
+                            <p class="text-xs text-gray-500">Brookside</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Desktop Search and Actions -->
+                    <div class="hidden lg:flex items-center space-x-4 flex-1 max-w-2xl">
+                        <div class="relative flex-1">
+                            <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                            <input type="text" placeholder="Search items, services, or neighbors..." class="w-full pl-12 pr-4 py-3 bg-gray-100 border-0 rounded-xl focus:outline-none focus:ring-2 focus:ring-coral/50">
+                        </div>
+                        <button class="p-3 bg-coral text-white rounded-xl hover:bg-coral/90 transition-colors">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                    
+                    <!-- Notifications and Profile -->
+                    <div class="flex items-center space-x-4">
+                        <button class="relative p-3 text-gray-600 hover:text-coral transition-colors">
+                            <i class="fas fa-bell text-lg"></i>
+                            <span class="absolute -top-1 -right-1 w-5 h-5 bg-coral text-white text-xs rounded-full flex items-center justify-center">3</span>
+                        </button>
+                        <!-- Mobile Profile -->
+                        <div class="lg:hidden">
+                            <!-- A friendly woman with dark hair smiling warmly in natural lighting -->
+                            <img src="https://pixabay.com/get/g3d378f2de1d7ffc90cba3ecf7e979e56bee6576b788142e75ea008356ba80c7d04ec948e076ccc4cdfeeff94c3041fa2118da9a3e83d0c9f60c71bc436a9640e_1280.jpg" alt="Profile" class="w-8 h-8 rounded-full object-cover border border-gray-200">
+                        </div>
+                        <!-- Location Switcher -->
+                        <button class="hidden lg:flex items-center space-x-2 px-3 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors">
+                            <i class="fas fa-map-marker-alt text-coral"></i>
+                            <span class="text-sm font-medium text-gray-700">Brookside</span>
+                            <i class="fas fa-chevron-down text-xs text-gray-500"></i>
+                        </button>
+                    </div>
+                </div>
+            </header>
+            <!-- @END_COMPONENT: TopHeader -->
+            
+            <!-- @COMPONENT: ContentArea [scrollable main content] -->
+            <div class="flex-1 overflow-auto">
+                <div class="p-4 lg:p-6 space-y-6">
+                    
+                    <!-- @COMPONENT: WelcomeCard [personalized greeting with glass effect] -->
+                    <div class="glass rounded-2xl p-6 bg-gradient-to-r from-coral/20 via-transparent to-teal/20 animate-fade-in">
+                        <div class="flex items-start justify-between">
+                            <div>
+                                <h2 class="text-xl lg:text-2xl font-semibold text-gray-800 mb-2">
+                                    Good afternoon, Sarah! 👋
+                                </h2>
+                                <p class="text-gray-600 mb-4">
+                                    Your neighborhood has <span class="font-semibold text-coral">8 new requests</span> and <span class="font-semibold text-teal">12 available items</span> nearby.
+                                </p>
+                                <div class="flex flex-wrap gap-3">
+                                    <button class="px-4 py-2 bg-white/50 backdrop-blur-sm rounded-lg text-sm font-medium hover:bg-white/70 transition-all hover-lift">
+                                        <i class="fas fa-plus mr-2 text-coral"></i>Post Item
+                                    </button>
+                                    <button class="px-4 py-2 bg-white/50 backdrop-blur-sm rounded-lg text-sm font-medium hover:bg-white/70 transition-all hover-lift">
+                                        <i class="fas fa-search mr-2 text-teal"></i>Find Help
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="hidden lg:block">
+                                <div class="w-20 h-20 bg-white/30 rounded-full flex items-center justify-center backdrop-blur-sm">
+                                    <i class="fas fa-home text-3xl text-coral"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- @END_COMPONENT: WelcomeCard -->
+                    
+                    <!-- @COMPONENT: QuickActions [emergency and nearby activities] -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 animate-slide-up">
+                        <!-- HelpOut Emergency -->
+                        <div class="bg-red-50/80 backdrop-blur-sm border border-red-200/50 rounded-xl p-4 hover-lift">
+                            <div class="flex items-center mb-3">
+                                <div class="w-10 h-10 bg-red-500 rounded-lg flex items-center justify-center mr-3">
+                                    <i class="fas fa-exclamation text-white"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold text-gray-800">Emergency Help</h3>
+                                    <p class="text-xs text-gray-600">Get instant help from neighbors</p>
+                                </div>
+                            </div>
+                            <button class="w-full bg-red-500 text-white py-2 rounded-lg font-medium hover:bg-red-600 transition-colors animate-pulse-coral">
+                                <i class="fas fa-sos mr-2"></i>Activate HelpOut
+                            </button>
+                        </div>
+                        
+                        <!-- Nearby Map Preview -->
+                        <div class="glass rounded-xl p-4 hover-lift relative overflow-hidden">
+                            <!-- A bird's eye view of a suburban neighborhood with houses and tree-lined streets -->
+                            <div class="absolute inset-0 opacity-20">
+                                <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=200" alt="Neighborhood aerial view" class="w-full h-full object-cover">
+                            </div>
+                            <div class="relative z-10">
+                                <div class="flex items-center mb-3">
+                                    <div class="w-10 h-10 bg-teal/80 backdrop-blur-sm rounded-lg flex items-center justify-center mr-3">
+                                        <i class="fas fa-map-marker-alt text-white"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-semibold text-gray-800">Nearby Activity</h3>
+                                        <p class="text-xs text-gray-600">5 active neighbors within 0.3 mi</p>
+                                    </div>
+                                </div>
+                                <button class="w-full bg-teal text-white py-2 rounded-lg font-medium hover:bg-teal/90 transition-colors">
+                                    <i class="fas fa-location-arrow mr-2"></i>Open Map View
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- @END_COMPONENT: QuickActions -->
+                    
+                    <!-- @COMPONENT: FeaturedSection [main loop content] -->
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <h2 class="text-xl font-semibold text-gray-800 flex items-center">
+                                <i class="fas fa-recycle text-coral mr-3"></i>
+                                Hommiefi Loop
+                            </h2>
+                            <button class="text-coral hover:text-coral/80 font-medium text-sm">View All</button>
+                        </div>
+                        
+                        <!-- Filter Tabs -->
+                        <div class="flex space-x-2 overflow-x-auto pb-2">
+                            <button class="flex-shrink-0 px-4 py-2 bg-coral text-white rounded-xl text-sm font-medium">All Items</button>
+                            <button class="flex-shrink-0 px-4 py-2 glass rounded-xl text-gray-600 text-sm hover:bg-white/50">Tools</button>
+                            <button class="flex-shrink-0 px-4 py-2 glass rounded-xl text-gray-600 text-sm hover:bg-white/50">Books</button>
+                            <button class="flex-shrink-0 px-4 py-2 glass rounded-xl text-gray-600 text-sm hover:bg-white/50">Baby Gear</button>
+                            <button class="flex-shrink-0 px-4 py-2 glass rounded-xl text-gray-600 text-sm hover:bg-white/50">Furniture</button>
+                        </div>
+                        
+                        <!-- @MAP: loopItems.map(item => ( -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                            <!-- Item Card 1 -->
+                            <div class="bg-white/90 backdrop-blur-sm rounded-xl shadow-sm border border-white/50 overflow-hidden hover:shadow-lg hover-lift transition-all">
+                                <!-- A professional power drill with various drill bits arranged on a clean workshop surface -->
+                                <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=160" alt="Power drill set" class="w-full h-40 object-cover">
+                                <div class="p-4">
+                                    <div class="flex justify-between items-start mb-2">
+                                        <h3 class="font-semibold text-gray-800">Power Drill Set</h3>
+                                        <span class="bg-green-100 text-green-700 px-2 py-1 rounded-lg text-xs font-medium">Free</span>
+                                    </div>
+                                    <p class="text-gray-600 text-sm mb-3">Complete drill set with various bits. Perfect for DIY projects.</p>
+                                    <div class="flex items-center justify-between mb-3">
+                                        <div class="flex items-center space-x-2">
+                                            <!-- A friendly man with a warm smile in casual clothing -->
+                                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=24&h=24" alt="Mike's profile" class="w-6 h-6 rounded-full object-cover">
+                                            <span class="text-sm text-gray-600">Mike R.</span>
+                                            <div class="flex text-yellow-400">
+                                                <i class="fas fa-star text-xs"></i>
+                                                <span class="text-xs text-gray-600 ml-1">4.9</span>
+                                            </div>
+                                        </div>
+                                        <span class="text-xs text-gray-500 flex items-center">
+                                            <i class="fas fa-location-dot mr-1 text-coral"></i>0.2 mi
+                                        </span>
+                                    </div>
+                                    <button class="w-full bg-coral text-white py-2 rounded-lg font-medium hover:bg-coral/90 transition-colors">
+                                        Request to Borrow
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Item Card 2 -->
+                            <div class="bg-white/90 backdrop-blur-sm rounded-xl shadow-sm border border-white/50 overflow-hidden hover:shadow-lg hover-lift transition-all">
+                                <!-- A collection of colorful children's books stacked neatly on a wooden bookshelf -->
+                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=160" alt="Children's books collection" class="w-full h-40 object-cover">
+                                <div class="p-4">
+                                    <div class="flex justify-between items-start mb-2">
+                                        <h3 class="font-semibold text-gray-800">Kids Book Collection</h3>
+                                        <span class="bg-blue-100 text-blue-700 px-2 py-1 rounded-lg text-xs font-medium">Swap</span>
+                                    </div>
+                                    <p class="text-gray-600 text-sm mb-3">Ages 3-8. Trade for books your kids have outgrown!</p>
+                                    <div class="flex items-center justify-between mb-3">
+                                        <div class="flex items-center space-x-2">
+                                            <!-- A smiling mother holding a young child in a park setting -->
+                                            <img src="https://images.unsplash.com/photo-1551836022-deb4988cc6c0?ixlib=rb-4.0.3&auto=format&fit=crop&w=24&h=24" alt="Jenny's profile" class="w-6 h-6 rounded-full object-cover">
+                                            <span class="text-sm text-gray-600">Jenny K.</span>
+                                            <div class="flex text-yellow-400">
+                                                <i class="fas fa-star text-xs"></i>
+                                                <span class="text-xs text-gray-600 ml-1">4.7</span>
+                                            </div>
+                                        </div>
+                                        <span class="text-xs text-gray-500 flex items-center">
+                                            <i class="fas fa-location-dot mr-1 text-coral"></i>0.4 mi
+                                        </span>
+                                    </div>
+                                    <button class="w-full bg-teal text-white py-2 rounded-lg font-medium hover:bg-teal/90 transition-colors">
+                                        Propose Swap
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Item Card 3 -->
+                            <div class="bg-white/90 backdrop-blur-sm rounded-xl shadow-sm border border-white/50 overflow-hidden hover:shadow-lg hover-lift transition-all">
+                                <!-- A modern baby stroller in excellent condition in a bright, clean setting -->
+                                <img src="https://pixabay.com/get/g0dd6384187951dfd215d34a7f855b6e19fd1c61a1f4feeeff8af84448c4f0f270717e6948e319845e3b6059922f747a6dd796ef724c4a2cf717578811d16eb85_1280.jpg" alt="Baby stroller" class="w-full h-40 object-cover">
+                                <div class="p-4">
+                                    <div class="flex justify-between items-start mb-2">
+                                        <h3 class="font-semibold text-gray-800">Baby Stroller</h3>
+                                        <span class="bg-orange-100 text-orange-700 px-2 py-1 rounded-lg text-xs font-medium">$5/day</span>
+                                    </div>
+                                    <p class="text-gray-600 text-sm mb-3">Excellent condition. Great for visits with grandkids!</p>
+                                    <div class="flex items-center justify-between mb-3">
+                                        <div class="flex items-center space-x-2">
+                                            <!-- A grandmother with kind eyes and gray hair smiling warmly -->
+                                            <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?ixlib=rb-4.0.3&auto=format&fit=crop&w=24&h=24" alt="Linda's profile" class="w-6 h-6 rounded-full object-cover">
+                                            <span class="text-sm text-gray-600">Linda S.</span>
+                                            <div class="flex text-yellow-400">
+                                                <i class="fas fa-star text-xs"></i>
+                                                <span class="text-xs text-gray-600 ml-1">5.0</span>
+                                            </div>
+                                        </div>
+                                        <span class="text-xs text-gray-500 flex items-center">
+                                            <i class="fas fa-location-dot mr-1 text-coral"></i>0.1 mi
+                                        </span>
+                                    </div>
+                                    <button class="w-full bg-orange-500 text-white py-2 rounded-lg font-medium hover:bg-orange-600 transition-colors">
+                                        Rent Now
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Gigs Preview -->
+                            <div class="bg-gradient-to-br from-purple-50 to-pink-50 backdrop-blur-sm rounded-xl border border-purple-100 p-4 hover-lift transition-all">
+                                <div class="flex items-center mb-4">
+                                    <div class="w-12 h-12 bg-gradient-to-r from-purple-400 to-pink-400 rounded-xl flex items-center justify-center mr-3">
+                                        <i class="fas fa-briefcase text-white"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-semibold text-gray-800">Need Help Moving?</h3>
+                                        <p class="text-sm text-gray-600">Quick Gig • $25/hour</p>
+                                    </div>
+                                </div>
+                                <p class="text-gray-600 text-sm mb-3">Need 2 people to help load a moving truck this Saturday morning.</p>
+                                <div class="flex items-center justify-between mb-3">
+                                    <div class="flex items-center space-x-2">
+                                        <!-- A professional-looking man in casual business attire -->
+                                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=24&h=24" alt="David's profile" class="w-6 h-6 rounded-full object-cover">
+                                        <span class="text-sm text-gray-600">David L.</span>
+                                        <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">Verified</span>
+                                    </div>
+                                    <span class="text-xs text-gray-500 flex items-center">
+                                        <i class="fas fa-clock mr-1"></i>2 hours
+                                    </span>
+                                </div>
+                                <button class="w-full bg-gradient-to-r from-purple-400 to-pink-400 text-white py-2 rounded-lg font-medium hover:opacity-90 transition-opacity">
+                                    Accept Gig
+                                </button>
+                            </div>
+                            
+                            <!-- Vibe Social Match -->
+                            <div class="glass-dark rounded-xl p-4 hover-lift transition-all text-white relative overflow-hidden">
+                                <!-- A cozy coffee shop interior with warm lighting and comfortable seating -->
+                                <div class="absolute inset-0 opacity-30">
+                                    <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300" alt="Cozy coffee shop" class="w-full h-full object-cover">
+                                </div>
+                                <div class="relative z-10">
+                                    <div class="flex items-center mb-4">
+                                        <div class="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center mr-3">
+                                            <i class="fas fa-coffee text-white"></i>
+                                        </div>
+                                        <div>
+                                            <h3 class="font-semibold text-white">Coffee Buddy?</h3>
+                                            <p class="text-sm text-white/80">3 neighbors free right now</p>
+                                        </div>
+                                    </div>
+                                    <p class="text-white/90 text-sm mb-3">Looking for someone to grab coffee and chat at Moonbeans Café.</p>
+                                    <div class="flex items-center space-x-2 mb-3">
+                                        <!-- Three profile images of diverse, friendly-looking people -->
+                                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=24&h=24" alt="Profile 1" class="w-6 h-6 rounded-full object-cover">
+                                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=24&h=24" alt="Profile 2" class="w-6 h-6 rounded-full object-cover">
+                                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=24&h=24" alt="Profile 3" class="w-6 h-6 rounded-full object-cover">
+                                        <span class="text-xs text-white/80">+ others nearby</span>
+                                    </div>
+                                    <button class="w-full bg-white/20 backdrop-blur-sm text-white py-2 rounded-lg font-medium hover:bg-white/30 transition-colors">
+                                        <i class="fas fa-heart mr-2"></i>Join Vibe
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Haven Mom Community -->
+                            <div class="bg-gradient-to-br from-pink-50 to-rose-50 backdrop-blur-sm rounded-xl border border-pink-100 p-4 hover-lift transition-all">
+                                <div class="flex items-center mb-4">
+                                    <div class="w-12 h-12 bg-gradient-to-r from-pink-400 to-rose-400 rounded-xl flex items-center justify-center mr-3">
+                                        <i class="fas fa-heart text-white"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-semibold text-gray-800">Mom's Haven</h3>
+                                        <p class="text-sm text-gray-600">Toddlers Group • 8 active</p>
+                                    </div>
+                                </div>
+                                <p class="text-gray-600 text-sm mb-3">"Anyone else's 2-year-old refusing naps? Need solidarity! 😅"</p>
+                                <div class="flex items-center justify-between mb-3">
+                                    <div class="flex -space-x-1">
+                                        <!-- Three profile images of mothers of different ethnicities -->
+                                        <img src="https://images.unsplash.com/photo-1551836022-deb4988cc6c0?ixlib=rb-4.0.3&auto=format&fit=crop&w=20&h=20" alt="Mom 1" class="w-5 h-5 rounded-full object-cover border border-white">
+                                        <img src="https://pixabay.com/get/g6352cac0141bee8a99cda5f8d9818ef8068f1993a51c765811c5ca975cd33dc08e80420bb4fcd5462b2d7e19c44d058083e23bde2a87de82c7e4a705eaabaaa4_1280.png" alt="Mom 2" class="w-5 h-5 rounded-full object-cover border border-white">
+                                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=20&h=20" alt="Mom 3" class="w-5 h-5 rounded-full object-cover border border-white">
+                                    </div>
+                                    <span class="text-xs text-gray-500">5 min ago</span>
+                                </div>
+                                <button class="w-full bg-gradient-to-r from-pink-400 to-rose-400 text-white py-2 rounded-lg font-medium hover:opacity-90 transition-opacity">
+                                    Join Conversation
+                                </button>
+                            </div>
+                        </div>
+                        <!-- @END_MAP -->
+                    </div>
+                    <!-- @END_COMPONENT: FeaturedSection -->
+                    
+                    <!-- @COMPONENT: CommunityFeed [recent neighborhood activity] -->
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <h2 class="text-xl font-semibold text-gray-800 flex items-center">
+                                <i class="fas fa-comments text-teal mr-3"></i>
+                                Community Thread
+                            </h2>
+                            <button class="text-teal hover:text-teal/80 font-medium text-sm">View All</button>
+                        </div>
+                        
+                        <div class="space-y-3">
+                            <!-- Thread Post 1 -->
+                            <div class="glass rounded-xl p-4 hover-lift transition-all">
+                                <div class="flex items-start space-x-3">
+                                    <!-- A middle-aged man with a friendly smile wearing a casual shirt -->
+                                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=40&h=40" alt="Community member" class="w-10 h-10 rounded-full object-cover">
+                                    <div class="flex-1">
+                                        <div class="flex items-center space-x-2 mb-2">
+                                            <span class="font-medium text-gray-800">Mike R.</span>
+                                            <span class="text-xs text-gray-500">2 hours ago</span>
+                                            <span class="bg-coral/10 text-coral px-2 py-1 rounded text-xs font-medium">Lost & Found</span>
+                                        </div>
+                                        <p class="text-gray-700 mb-2">Found a set of keys near the corner of Maple and Oak. Silver keychain with a small dog charm. DM me if they're yours!</p>
+                                        <div class="flex items-center space-x-4 text-sm text-gray-500">
+                                            <button class="hover:text-coral transition-colors flex items-center">
+                                                <i class="fas fa-heart mr-1"></i>12
+                                            </button>
+                                            <button class="hover:text-teal transition-colors flex items-center">
+                                                <i class="fas fa-comment mr-1"></i>5
+                                            </button>
+                                            <button class="hover:text-gray-700 transition-colors">Share</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Thread Post 2 -->
+                            <div class="glass rounded-xl p-4 hover-lift transition-all">
+                                <div class="flex items-start space-x-3">
+                                    <!-- A friendly woman with curly hair smiling in natural lighting -->
+                                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=40&h=40" alt="Community member" class="w-10 h-10 rounded-full object-cover">
+                                    <div class="flex-1">
+                                        <div class="flex items-center space-x-2 mb-2">
+                                            <span class="font-medium text-gray-800">Emma T.</span>
+                                            <span class="text-xs text-gray-500">4 hours ago</span>
+                                            <span class="bg-teal/10 text-teal px-2 py-1 rounded text-xs font-medium">Recommendation</span>
+                                        </div>
+                                        <p class="text-gray-700 mb-2">Can anyone recommend a good local plumber? Need someone reliable for a kitchen sink repair. Thanks!</p>
+                                        <div class="flex items-center space-x-4 text-sm text-gray-500">
+                                            <button class="hover:text-coral transition-colors flex items-center">
+                                                <i class="fas fa-heart mr-1"></i>8
+                                            </button>
+                                            <button class="hover:text-teal transition-colors flex items-center">
+                                                <i class="fas fa-comment mr-1"></i>12
+                                            </button>
+                                            <button class="hover:text-gray-700 transition-colors">Share</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- @END_COMPONENT: CommunityFeed -->
+                    
+                </div>
+            </div>
+            <!-- @END_COMPONENT: ContentArea -->
+        </main>
+        <!-- @END_COMPONENT: MainContent -->
+        
+    </div>
+    
+    <!-- @COMPONENT: MobileBottomNavigation [mobile bottom tab bar] -->
+    <nav class="lg:hidden fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-md border-t border-glass-border z-50">
+        <div class="flex justify-around py-2">
+            <button class="flex flex-col items-center py-2 px-4 text-coral">
+                <i class="fas fa-recycle text-xl mb-1"></i>
+                <span class="text-xs font-medium">Loop</span>
+                <div class="w-1 h-1 bg-coral rounded-full mt-1"></div>
+            </button>
+            <button class="flex flex-col items-center py-2 px-4 text-gray-500 hover:text-coral transition-colors">
+                <i class="fas fa-briefcase text-xl mb-1"></i>
+                <span class="text-xs">Gigs</span>
+            </button>
+            <button class="flex flex-col items-center py-2 px-4 text-gray-500 hover:text-coral transition-colors">
+                <i class="fas fa-users text-xl mb-1"></i>
+                <span class="text-xs">Vibe</span>
+            </button>
+            <button class="flex flex-col items-center py-2 px-4 text-gray-500 hover:text-coral transition-colors">
+                <i class="fas fa-heart text-xl mb-1"></i>
+                <span class="text-xs">Haven</span>
+            </button>
+            <button class="flex flex-col items-center py-2 px-4 text-gray-500 hover:text-coral transition-colors">
+                <i class="fas fa-comments text-xl mb-1"></i>
+                <span class="text-xs">Thread</span>
+            </button>
+        </div>
+    </nav>
+    <!-- @END_COMPONENT: MobileBottomNavigation -->
+    
+    <!-- @COMPONENT: ChatOverlay [floating chat notifications] -->
+    <div class="fixed bottom-20 lg:bottom-6 right-4 z-50">
+        <!-- New Chat Message Notification -->
+        <div class="glass rounded-xl p-3 mb-2 max-w-xs hover-lift animate-slide-up">
+            <div class="flex items-start space-x-3">
+                <!-- A smiling woman with shoulder-length brown hair -->
+                <img src="https://pixabay.com/get/gde96dbdd2c8a84f729a8d9edef48734e9ab3578a8bbd33e422e8cbb19e37c1fe0e5825644a35ae74c324e5741cdf238a60018cf4b58ecfa85f90c5608ba2689d_1280.jpg" alt="Jenny" class="w-8 h-8 rounded-full object-cover">
+                <div class="flex-1">
+                    <p class="text-sm font-medium text-gray-800">Jenny from Haven</p>
+                    <p class="text-xs text-gray-600">Thanks for the baby carrier! 💕</p>
+                </div>
+                <button class="text-gray-400 hover:text-gray-600">
+                    <i class="fas fa-times text-xs"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Chat Floating Action Button -->
+        <button class="w-14 h-14 gradient-coral-teal rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all hover:scale-105">
+            <i class="fas fa-comment text-white text-xl"></i>
+            <span class="absolute -top-2 -right-2 w-6 h-6 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">2</span>
+        </button>
+    </div>
+    <!-- @END_COMPONENT: ChatOverlay -->
+    
+    <!-- JavaScript for interactive functionality -->
+    <script>
+        (function() {
+            // TODO: Implement real-time notifications system
+            // TODO: Add chat functionality with WebSocket connections
+            // TODO: Implement location-based filtering
+            // TODO: Add map integration for neighborhood selection
+            
+            // Simulate real-time updates
+            function simulateRealTimeUpdate() {
+                const notifications = document.querySelectorAll('.animate-pulse-coral');
+                notifications.forEach(el => {
+                    // Simulate emergency button state changes
+                });
+            }
+            
+            // Initialize app
+            document.addEventListener('DOMContentLoaded', function() {
+                // Add smooth scrolling
+                document.documentElement.style.scrollBehavior = 'smooth';
+                
+                // Initialize tab switching
+                const tabButtons = document.querySelectorAll('nav button');
+                tabButtons.forEach(button => {
+                    button.addEventListener('click', function() {
+                        // TODO: Implement tab content switching
+                        console.log('Tab clicked:', this.textContent);
+                    });
+                });
+                
+                // Simulate notifications
+                setTimeout(() => {
+                    // TODO: Show real-time activity updates
+                }, 3000);
+            });
+            
+            // TODO: Implement geolocation for neighborhood detection
+            // TODO: Add service worker for offline functionality
+            // TODO: Implement push notifications
+        })();
+    </script>
+</body>
+</html>
